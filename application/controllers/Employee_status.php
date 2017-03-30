@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Employee_status extends CI_Controller {
+class Employee_status extends MY_Controller {
 
 	public $data = array(
                         'modul'         		=> 'employee_status',

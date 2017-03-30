@@ -89,8 +89,8 @@ $photo    = $this->session->userdata('photo');
           </span>
         </a>
         <ul class="treeview-menu">  
-          <li class="<?php if (!empty($nav_department)): echo $nav_department; elseif (empty($nav_department)): echo ''; endif ?>">
-            <a href="<?php echo base_url('department'); ?>"><i class="fa fa-circle-o text-aqua"></i> User</a>
+          <li class="<?php if (!empty($nav_user_management)): echo $nav_user_management; elseif (empty($nav_user_management)): echo ''; endif ?>">
+            <a href="<?php echo base_url('user_management'); ?>"><i class="fa fa-circle-o text-aqua"></i> User</a>
           </li>
         </ul>
       </li>

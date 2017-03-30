@@ -49,7 +49,7 @@
     <br>
     <br>
     <div class="lockscreen-footer text-center">
-      Copyright &copy; 2016<b><a href="sidauruk.dedi@gmail.com" class="text-black"> Sidauruk Dedi XI</a></b> All rights reserved<br>
+      Copyright &copy; <?php echo date("Y");?><b><a href="sidauruk.dedi@gmail.com" class="text-black"> Sidauruk Dedi XI</a></b> All rights reserved<br>
       Admin Theme By <b><a href="http://almsaeedstudio.com" class="text-black">Almsaeed Studio</a></b> Version 2.3.6<br>
     </div>
     <div class="lockscreen-footer text-center">

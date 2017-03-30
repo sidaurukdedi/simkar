@@ -96,9 +96,49 @@
                 autoclose: true,
                 format: 'yyyy-mm-dd'
             });
+            $('#datepicker_resign_date').datepicker({
+                autoclose: true,
+                format: 'yyyy-mm-dd'
+            });
+            $('#datepicker_prob_date').datepicker({
+                autoclose: true,
+                format: 'yyyy-mm-dd'
+            });
+            $('#datepicker_end_date').datepicker({
+                autoclose: true,
+                format: 'yyyy-mm-dd'
+            });
+            $('#datepicker_contract1_date').datepicker({
+                autoclose: true,
+                format: 'yyyy-mm-dd'
+            });
+            $('#datepicker_contract2_date').datepicker({
+                autoclose: true,
+                format: 'yyyy-mm-dd'
+            });
+            $('#datepicker_contract3_date').datepicker({
+                autoclose: true,
+                format: 'yyyy-mm-dd'
+            });
 
             $("#alert").fadeTo(2000, 0).slideUp(500, function(){
                 $("#alert").slideUp(500);
+            });
+
+            // $('#show_resigndate').hide();
+            // $("#show_resigndate").hide();
+            //         $("#show_contract").hide();
+            $("#select_employee_status").change(function () {
+                if ($(this).val() == '01') {
+                    $("#show_resigndate").hide();
+                    $("#show_contract").hide();
+                } else if ($(this).val() == '02') {
+                    $("#show_resigndate").hide();
+                    $("#show_contract").show();
+                } else if ($(this).val() == '03'){
+                    $("#show_resigndate").show();
+                    $("#show_contract").hide();
+                }
             });
         });
     </script>

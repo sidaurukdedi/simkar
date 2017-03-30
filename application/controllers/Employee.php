@@ -228,7 +228,8 @@ class Employee extends MY_Controller {
                     $config['file_name']            = $new_name;
                     $this->load->library('upload', $config);
 
-                    if ( ! $this->upload->do_upload('userfile'))
+                    //if ( ! $this->upload->do_upload('userfile'))
+                    if (empty($_FILES['userfile']['name']))
                     {
                         $error = array('error' => $this->upload->display_errors());
                         $this->data['pesan'] = 'Upload foto gagal.';
@@ -238,6 +239,7 @@ class Employee extends MY_Controller {
                     }
                     else
                     {
+                        $this->upload->do_upload('userfile');
                         $upload_image = $this->upload->data();
                         $file_name = $upload_image['file_name'];
                         $gallery_path = './assets/uploads/employee/';
@@ -368,11 +370,24 @@ class Employee extends MY_Controller {
                         
 
                         if ( ! $this->upload->do_upload('userfile'))
-
                         {
-                            $error = array('error' => $this->upload->display_errors());
-                            $this->data['pesan'] = 'Upload foto gagal.';
-                            $this->load->view('template', $this->data);
+                            $file_name = $this->session->userdata('photo_employee');
+
+                            if($this->employee->edit($this->session->userdata('id_employee'), $file_name))
+                            {
+                                $this->session->set_flashdata('pesan', 'Proses update data berhasil.');
+                                redirect('employee');
+                            }
+                            else
+                            {
+                                $this->data['pesan'] = 'Proses update data gagal.';
+                                $this->load->view('template', $this->data);
+                            }
+
+
+                            // $error = array('error' => $this->upload->display_errors());
+                            // $this->data['pesan'] = 'Upload foto gagal.';
+                            // $this->load->view('template', $this->data);
                             //echo "gagal upload, cek...!!!";
                             //$this->load->view('upload_form', $error);
                         }
@@ -420,13 +435,11 @@ class Employee extends MY_Controller {
                     }
 
                 }
-            // tidak disubmit, form pertama kali dimuat
+                // tidak disubmit, form pertama kali dimuat
                 else
                 {
-                    // $cek = $this->input->post('userfile');
-                    // print_r($cek);
-                    // die();
-                // ambil data dari database, $form_value sebagai nilai default form
+
+                    // ambil data dari database, $form_value sebagai nilai default form
                     $employee = $this->employee->cari($id_employee);
                     foreach($employee as $key => $value)
                     {
@@ -458,8 +471,13 @@ class Employee extends MY_Controller {
         if ($level == "Admin"){
             if( ! empty($id_employee))
             {
+                $path = './assets/uploads/employee/';
+                $path_thumb = $path . 'thumbs/';
+                $employee = $this->employee->cari_detail($id_employee);
                 if($this->employee->hapus($id_employee))
                 {
+                    @unlink($path.$employee['photo']);
+                    @unlink($path_thumb.$employee['photo']);
                     $this->session->set_flashdata('pesan', 'Proses hapus data berhasil.');
                     redirect('employee');
                 }

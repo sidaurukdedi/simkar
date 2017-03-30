@@ -292,7 +292,9 @@ class Employee_model extends CI_Model {
                                     marital_status.marital_status, employee.child, employee.no_hp, employee.no_telp,
                                     employee.photo, education.education, employee.school_majors, employee.school_name,
                                     employee.year_graduation, employee.existing_job, employee.join_date, department.department,
-                                    employment.employment, employee_status.employee_status')
+                                    employment.employment, employee_status.employee_status, employee.resign_date,
+                                    employee.prob_date, employee.contract1_start, employee.contract2_start, employee.contract3_start,
+                                    employee.end_date')
                             ->from($this->db_tabel)
                             ->join('religion', 'religion.id_religion = employee.id_religion')
                             ->join('marital_status', 'marital_status.id_marital_status = employee.id_marital_status')
@@ -313,7 +315,9 @@ class Employee_model extends CI_Model {
                             marital_status.marital_status, employee.child, employee.no_hp, employee.no_telp,
                             employee.photo, education.education, employee.school_majors, employee.school_name,
                             employee.year_graduation, employee.existing_job, employee.join_date, department.department,
-                            employment.employment, employee_status.employee_status')
+                            employment.employment, employee_status.employee_status, employee.resign_date,
+                            employee.prob_date, employee.contract1_start, employee.contract2_start, employee.contract3_start,
+                            employee.end_date')
                             ->from($this->db_tabel)
                             ->join('religion', 'religion.id_religion = employee.id_religion')
                             ->join('marital_status', 'marital_status.id_marital_status = employee.id_marital_status')
@@ -327,6 +331,13 @@ class Employee_model extends CI_Model {
             return $query->row_array();
         }
         $query->free_result();
+    }
+
+    public function cari_semua_dropdown()
+    {
+        return $this->db->order_by('name', 'ASC')
+                        ->get($this->db_tabel)
+                        ->result();
     }
 
 
@@ -391,6 +402,8 @@ class Employee_model extends CI_Model {
         $employee_department_col        = array('data' => 'Department', 'class' => 'text-center');
         $employee_employment_col        = array('data' => 'Employment', 'class' => 'text-center');
         $employee_employee_status_col   = array('data' => 'Employee Status', 'class' => 'text-center');
+        $employee_end_date_col          = array('data' => 'End Date', 'class' => 'text-center');
+        $employee_resign_date_col       = array('data' => 'Resign Date', 'class' => 'text-center');
         $action_col                     = array('data' => 'Action', 'class' => 'text-center td_action', 'colspan' => 3);
         // $this->table->set_heading($no_col, $employee_no_col, $employee_name_col, $employee_place_of_birth_col, $employee_date_of_birth_col,
         //                             $employee_gender_col, $employee_address_col, $employee_religion_col, $employee_marital_status_col,
@@ -398,9 +411,9 @@ class Employee_model extends CI_Model {
         //                             $employee_education_col, $employee_school_majors_col, $employee_school_name_col, $employee_yeargrad_col,
         //  							$employee_existing_col, $employee_join_date_col, $employee_department_col, $employee_employment_col,
         //                             $employee_employee_status_col, $action_col);
-        $this->table->set_heading($no_col, $employee_no_col, $employee_name_col, $employee_join_date_col, 
-                                    $employee_department_col, $employee_employment_col,
-                                    $employee_employee_status_col, $action_col);
+        $this->table->set_heading($no_col, $employee_no_col, $employee_name_col, $employee_department_col,
+                                    $employee_employment_col, $employee_employee_status_col, $employee_join_date_col, 
+                                    $employee_end_date_col, $employee_resign_date_col, $action_col);
         // no urut data
         $no = 0 + $this->offset;
         foreach ($data as $row)
@@ -435,10 +448,13 @@ class Employee_model extends CI_Model {
                 // $row->school_name,
                 // $row->year_graduation,                
                 // $row->existing_job,
-                $row->join_date,
+                
                 $row->department,
                 $row->employment,
                 $row->employee_status,
+                $row->join_date,
+                $row->end_date,
+                $row->resign_date,
                 anchor('employee/detail/'.$row->id_employee,'Detail',array('class' => 'btn btn-info btn-xs btn-flat center-block')),
                 anchor('employee/edit/'.$row->id_employee,'&nbsp;Edit&nbsp;',array('class' => 'btn btn-warning btn-xs btn-flat center-block')),
                 anchor('employee/delete/'.$row->id_employee,'Delete',array('class'=> 'btn btn-danger btn-xs btn-flat center-block','onclick'=>"return confirm('Anda yakin akan menghapus data ini?')"))
@@ -487,8 +503,15 @@ class Employee_model extends CI_Model {
 
     public function tambah($file_name)
     {
-        $date_of_birth  = $this->input->post('date_of_birth');
-        $join_date      = $this->input->post('join_date');       
+        $date_of_birth      = $this->input->post('date_of_birth');
+        $join_date          = $this->input->post('join_date');
+        $resign_date        = $this->input->post('resign_date');  
+        $prob_start         = $this->input->post('prob_start');
+        $end_date           = $this->input->post('end_date');  
+        $contract1_start    = $this->input->post('contract1_start');
+        $contract2_start    = $this->input->post('contract2_start');
+        $contract3_start    = $this->input->post('contract3_start');
+
         $employee = array(
             'no_employee'       => $this->input->post('no_employee'),
             'name'              => $this->input->post('name'),
@@ -510,7 +533,13 @@ class Employee_model extends CI_Model {
             'existing_job'      => $this->input->post('existing_job'),
             'id_department'     => $this->input->post('id_department'),
             'id_employment'     => $this->input->post('id_employment'),
-            'id_employee_status'=> $this->input->post('id_employee_status')
+            'id_employee_status'=> $this->input->post('id_employee_status'),
+            'resign_date'       => empty($resign_date) ?  NULL : date('Y-m-d', strtotime($resign_date)),
+            'prob_date'         => empty($prob_start) ?  NULL : date('Y-m-d', strtotime($prob_start)),
+            'contract1_start'   => empty($contract1_start) ?  NULL : date('Y-m-d', strtotime($contract1_start)),
+            'contract2_start'   => empty($contract2_start) ?  NULL : date('Y-m-d', strtotime($contract2_start)),
+            'contract3_start'   => empty($contract3_start) ?  NULL : date('Y-m-d', strtotime($contract3_start)),
+            'end_date'          => empty($end_date) ?  NULL : date('Y-m-d', strtotime($end_date)),
             );
             // echo "<pre>";
             // print_r ($employee);
@@ -530,8 +559,16 @@ class Employee_model extends CI_Model {
 
     public function edit($id_employee, $file_name)
     {
-        $date_of_birth  = $this->input->post('date_of_birth');
-        $join_date      = $this->input->post('join_date');       
+        $date_of_birth      = $this->input->post('date_of_birth');
+        $join_date          = $this->input->post('join_date'); 
+        $resign_date        = $this->input->post('resign_date');  
+        $prob_start         = $this->input->post('prob_start');  
+        $end_date           = $this->input->post('end_date');  
+        $contract1_start    = $this->input->post('contract1_start');
+        $contract2_start    = $this->input->post('contract2_start');
+        $contract3_start    = $this->input->post('contract3_start');
+
+
         $employee = array(
             'no_employee'       => $this->input->post('no_employee'),
             'name'              => $this->input->post('name'),
@@ -553,7 +590,13 @@ class Employee_model extends CI_Model {
             'existing_job'      => $this->input->post('existing_job'),
             'id_department'     => $this->input->post('id_department'),
             'id_employment'     => $this->input->post('id_employment'),
-            'id_employee_status'=> $this->input->post('id_employee_status')
+            'id_employee_status'=> $this->input->post('id_employee_status'),
+            'resign_date'       => empty($resign_date) ?  NULL : date('Y-m-d', strtotime($resign_date)),
+            'prob_date'         => empty($prob_start) ?  NULL : date('Y-m-d', strtotime($prob_start)),
+            'contract1_start'   => empty($contract1_start) ?  NULL : date('Y-m-d', strtotime($contract1_start)),
+            'contract2_start'   => empty($contract2_start) ?  NULL : date('Y-m-d', strtotime($contract2_start)),
+            'contract3_start'   => empty($contract3_start) ?  NULL : date('Y-m-d', strtotime($contract3_start)),
+            'end_date'          => empty($end_date) ?  NULL : date('Y-m-d', strtotime($end_date)),
             );
 
         // echo "<pre>";

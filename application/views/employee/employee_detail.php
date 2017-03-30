@@ -159,6 +159,25 @@
                     <dt>Join Date</dt>
                     <dd><?php echo $employee['join_date']?></dd>
                     <br>
+                    <dt>Resign Date</dt>
+                    <dd><?php echo $employee['resign_date']?></dd>
+                    <br>
+                    <dt>Probation Start Date</dt>
+                    <dd><?php echo $employee['prob_date']?></dd>
+                    <br>
+                    <dt>Contract 1 Start Date</dt>
+                    <dd><?php echo $employee['contract1_start']?></dd>
+                    <br>
+                    <dt>Contract 2 Start Date</dt>
+                    <dd><?php echo $employee['contract2_start']?></dd>
+                    <br>
+                    <dt>Contract 3 Start Date</dt>
+                    <dd><?php echo $employee['contract3_start']?></dd>
+                    <br>
+                    <dt>End Date</dt>
+                    <dd><?php echo $employee['end_date']?></dd>
+                    <br>
+
                     <dt>Department</dt>
                     <dd><?php echo $employee['department']?></dd>
                     <br>

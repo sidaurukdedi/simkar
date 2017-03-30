@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Education extends CI_Controller {
+class Education extends MY_Controller {
 
 	public $data = array(
                         'modul'         => 'education',

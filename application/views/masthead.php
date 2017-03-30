@@ -14,9 +14,9 @@ $photo    = $this->session->userdata('photo');
     <!-- Logo -->
     <a href="<?php echo base_url('dashboard'); ?>" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span class="logo-mini"><b>A</b>LT</span>
+      <span class="logo-mini"><b>H</b>RM</span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><b>SIM</b>XYZ</span>
+      <span class="logo-lg"><b>SIM</b>HR</span>
     </a>
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top">
@@ -50,7 +50,7 @@ $photo    = $this->session->userdata('photo');
               <!-- Menu Footer-->
               <li class="user-footer">
                 <div class="pull-left">
-                  <a href="#" class="btn btn-default btn-flat">Profile</a>
+                  <!-- <a href="#" class="btn btn-default btn-flat">Profile</a> -->
                 </div>
                 <div class="pull-right">
                   <a href="<?php echo base_url('logout'); ?>" class="btn btn-default btn-flat">Sign out</a>

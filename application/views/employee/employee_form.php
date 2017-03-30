@@ -31,7 +31,7 @@ $form = array(
 		'onchange' => "readURL(this);",
 	 	//'size'=>'30',
 	 	//'class'=>'form-control input-sm',
-		//'value'=>set_value('photo', isset($form_value['photo']) ? $form_value['photo'] : '')
+		'value'=>set_value('photo', isset($form_value['photo']) ? $form_value['photo'] : '')
 		),
 	'school_majors' => array(
 		'name'=>'school_majors',
@@ -88,6 +88,48 @@ $form = array(
 		//'size'=>'30',
 		'class'=>'form-control input-sm pull-right',
 		'value'=>set_value('join_date', isset($form_value['join_date']) ? $form_value['join_date'] : '')
+		),
+	'resign_date' => array(
+		'id' => 'datepicker_resign_date',
+		'name'=>'resign_date',
+		//'size'=>'30',
+		'class'=>'form-control input-sm pull-right',
+		'value'=>set_value('resign_date', isset($form_value['resign_date']) ? $form_value['resign_date'] : '')
+		),
+	'prob_start' => array(
+		'id' => 'datepicker_prob_date',
+		'name'=>'prob_start',
+		//'size'=>'30',
+		'class'=>'form-control input-sm pull-right',
+		'value'=>set_value('prob_date', isset($form_value['prob_date']) ? $form_value['prob_date'] : '')
+		),
+	'end_date' => array(
+		'id' => 'datepicker_end_date',
+		'name'=>'end_date',
+		//'size'=>'30',
+		'class'=>'form-control input-sm pull-right',
+		'value'=>set_value('end_date', isset($form_value['end_date']) ? $form_value['end_date'] : '')
+		),
+	'contract1_start' => array(
+		'id' => 'datepicker_contract1_date',
+		'name'=>'contract1_start',
+		//'size'=>'30',
+		'class'=>'form-control input-sm pull-right',
+		'value'=>set_value('contract1_start', isset($form_value['contract1_start']) ? $form_value['contract1_start'] : '')
+		),
+	'contract2_start' => array(
+		'id' => 'datepicker_contract2_date',
+		'name'=>'contract2_start',
+		//'size'=>'30',
+		'class'=>'form-control input-sm pull-right',
+		'value'=>set_value('contract2_start', isset($form_value['contract2_start']) ? $form_value['contract2_start'] : '')
+		),
+	'contract3_start' => array(
+		'id' => 'datepicker_contract3_date',
+		'name'=>'contract3_start',
+		//'size'=>'30',
+		'class'=>'form-control input-sm pull-right',
+		'value'=>set_value('contract3_start', isset($form_value['contract3_start']) ? $form_value['contract3_start'] : '')
 		),
 	'submit'   => array(
 		'name'=>'submit',
@@ -402,14 +444,128 @@ $form = array(
 									</div>
 								</div>
 							</div>
-							<div class="form-group">
-								<?php echo form_label('Employee Status', 'id_employee_status'); ?>
-								<?php echo form_dropdown('id_employee_status', $opt_employee_status, set_value('id_employee_status', isset($form_value['id_employee_status']) ? $form_value['id_employee_status'] : ''), 
-								['class'=>'form-control input-sm select2']); ?>
-								<div class="form-group has-error">
-									<span class="help-block">
-										<?php echo form_error('id_employee_status');?>
-									</span>
+
+							<div class="row">
+								<div class="col-lg-6">
+									<div class="form-group">
+										<?php echo form_label('Employee Status', 'id_employee_status'); ?>
+										<?php echo form_dropdown('id_employee_status', $opt_employee_status, set_value('id_employee_status', isset($form_value['id_employee_status']) ? $form_value['id_employee_status'] : ''), 
+										['id'=>'select_employee_status', 'class'=>'form-control input-sm select2']); ?>
+										<div class="form-group has-error">
+											<span class="help-block">
+												<?php echo form_error('id_employee_status');?>
+											</span>
+										</div>
+									</div>
+								</div>
+								<div class="col-lg-6">
+									<div class="form-group" id="show_resigndate">
+										<label>Resign Date</label>
+										<div class="input-group date">
+											<div class="input-group-addon">
+												<i class="fa fa-calendar"></i>
+											</div>
+											<?php echo form_input($form['resign_date']); ?>
+										</div>
+										<div class="form-group has-error">
+											<span class="help-block">
+												<?php echo form_error('resign_date');?>
+											</span>
+										</div>
+										<!-- /.input group -->
+									</div>
+								</div>
+							</div>
+							<div id="show_contract">
+								<div class="row">
+									<div class="col-lg-6">
+										<div class="form-group">
+											<label>Probation Start Date</label>
+											<div class="input-group date">
+												<div class="input-group-addon">
+													<i class="fa fa-calendar"></i>
+												</div>
+												<?php echo form_input($form['prob_start']); ?>
+											</div>
+											<div class="form-group has-error">
+												<span class="help-block">
+													<?php echo form_error('prob_start');?>
+												</span>
+											</div>
+											<!-- /.input group -->
+										</div>
+									</div>
+									<div class="col-lg-6">
+										<div class="form-group">
+											<label>End Date</label>
+											<div class="input-group date">
+												<div class="input-group-addon">
+													<i class="fa fa-calendar"></i>
+												</div>
+												<?php echo form_input($form['end_date']); ?>
+											</div>
+											<div class="form-group has-error">
+												<span class="help-block">
+													<?php echo form_error('end_date');?>
+												</span>
+											</div>
+											<!-- /.input group -->
+										</div>
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col-lg-4">
+										<div class="form-group">
+											<label>Contract 1 Start Date</label>
+											<div class="input-group date">
+												<div class="input-group-addon">
+													<i class="fa fa-calendar"></i>
+												</div>
+												<?php echo form_input($form['contract1_start']); ?>
+											</div>
+											<div class="form-group has-error">
+												<span class="help-block">
+													<?php echo form_error('contract1_start');?>
+												</span>
+											</div>
+											<!-- /.input group -->
+										</div>
+									</div>
+									<div class="col-lg-4">
+										<div class="form-group">
+											<label>Contract 2 Start Date</label>
+											<div class="input-group date">
+												<div class="input-group-addon">
+													<i class="fa fa-calendar"></i>
+												</div>
+												<?php echo form_input($form['contract2_start']); ?>
+											</div>
+											<div class="form-group has-error">
+												<span class="help-block">
+													<?php echo form_error('contract2_start');?>
+												</span>
+											</div>
+											<!-- /.input group -->
+										</div>
+									</div>
+									<div class="col-lg-4">
+										<div class="form-group">
+											<label>Contract 3 Start Date</label>
+											<div class="input-group date">
+												<div class="input-group-addon">
+													<i class="fa fa-calendar"></i>
+												</div>
+												<?php echo form_input($form['contract3_start']); ?>
+											</div>
+											<div class="form-group has-error">
+												<span class="help-block">
+													<?php echo form_error('contract3_start');?>
+												</span>
+											</div>
+											<!-- /.input group -->
+										</div>
+									</div>
 								</div>
 							</div>
 						</div>

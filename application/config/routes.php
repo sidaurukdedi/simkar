@@ -71,6 +71,10 @@ $route['education/pages/(:num)'] = "education/index/$1";
 $route['employment/pages'] = "employment/index";
 $route['employment/pages/(:num)'] = "employment/index/$1";
 
+// User_management Paging
+$route['user_management/pages'] = "user_management/index";
+$route['user_management/pages/(:num)'] = "user_management/index/$1";
+
 
 $route['logout'] = "login/logout";
 // Absen Paging

@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Marital_status extends CI_Controller {
+class Marital_status extends MY_Controller {
 
 	public $data = array(
                         'modul'         => 'marital_status',
